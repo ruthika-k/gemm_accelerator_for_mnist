@@ -11,7 +11,7 @@ The accelerator performs matrix multiplication using parallel INT8 MAC units, wh
 * INT8 activations and weights
 * INT32 accumulation
 * Multiple parallel MAC units
-* Packed weight storage optimized for MAC parallelism
+* Packed weight storage optimised for MAC parallelism
 * SRAM-based memory system
 * Parameterizable matrix dimensions (M, K, N)
 * Fixed-point requantization using Q16.16 scaling factors
@@ -77,8 +77,9 @@ Prediction
 | ---------------------- | -------------- |
 | Dataset                | MNIST Test Set |
 | Precision              | INT8           |
-| FP32 Accuracy          | ~96%           |
-| INT8 Accuracy          | ~94.6%         |
+| Pytorch FP32 Accuracy  | ~96%           |
+| Verilog INT8 Accuracy  | ~95%           |
+| Python INT8 Accuracy   | ~95%           |
 | Average Layer 1 Cycles | 3180           |
 | Average Layer 2 Cycles | 88             |
 | Average Total Cycles   | 3268           |
@@ -87,23 +88,29 @@ Prediction
 
 ## Key Files
 
+`rtl/gemm_accelerator.v` — GEMM accelerator
+`rtl/mac.v` — MAC processing element
+`rtl/sram_<A/B/C>.v` — storage elements
+`tb/tb_gemm_mnist.v` — MNIST inference testbench
+`python_scripts/train_mnist_export_int8.py` — Training and quantization export
+`python_scripts/MNIST_test_wrapper.py` — Accuracy evaluation script
 
 ---
 
 ## Usage
 
-1. Train the MNIST model using pytorch and export the quantized test data, weights & biases
+**1. Train the MNIST model using PyTorch and export the quantized test data, weights & biases**
 
-python ./python_scripts/train_mnist_export_int8.py
+`python ./python_scripts/train_mnist_export_int8.py`
 
-2. Copy test data corresponding to a single image to selected_image.txt 
+**2. Copy test data corresponding to a single image to selected_image.txt**
 
-python ./python_scripts/select_test_image.py <index of the image>
+`python ./python_scripts/select_test_image.py <index of the image>`
 
-3. Compile and run verilog simulation
+**3. Compile and run verilog simulation**
 
 Compile:
-
+```
 iverilog -g2012 -o simulations/sim.out \
 tb/tb_gemm_mnist.v \
 rtl/gemm_accelerator.v \
@@ -111,23 +118,24 @@ rtl/mac.v \
 rtl/sram_A.v \
 rtl/sram_B.v \
 rtl/sram_C.v
-
+```
 Run:
 
-vvp simulations/sim.out +IMAGE_IDX=<index of the image> +LABEL=<label of the image> 
+`vvp simulations/sim.out +IMAGE_IDX=<index of the image> +LABEL=<label of the image>`
 
 #needs manual pick of the label from ./exports/test_labels.txt
 
-4. Alternatively simulate and get stats for multiple images using the MNIST_rtl_test_wrapper.py script
+**4. Alternatively, simulate and get stats for multiple images using the MNIST_rtl_test_wrapper.py script**
 
-python ./python_scripts/MNIST_rtl_test_wrapper.py <num of images to be simulated>
+`python ./python_scripts/MNIST_rtl_test_wrapper.py <num of images to be simulated>`
 
 #automatically simulates test images from index 0 to n_images-1 and calculates accuracy and cycle counts.  
 #n_images <= 10000. 
 
-5. Python simulation that mimics RTL code for comparision:
+**5. Python simulation that mimics RTL code for comparison:**
 
-python ./python_scripts/python_manual_mnist.py <num of images to be simulated>
+`python ./python_scripts/python_manual_mnist.py <num of images to be simulated>`
+
 ---
 
 ## Future Improvements
