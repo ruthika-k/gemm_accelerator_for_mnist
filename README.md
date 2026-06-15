@@ -80,8 +80,8 @@ Prediction
 | Pytorch FP32 Accuracy  | ~96%           |
 | Verilog INT8 Accuracy  | ~95%           |
 | Python INT8 Accuracy   | ~95%           |
-| Average Layer 1 Cycles | 3180           |
-| Average Layer 2 Cycles | 88             |
+| Average Layer 1 Cycles | 3178           |
+| Average Layer 2 Cycles | 86             |
 | Average Total Cycles   | 3268           |
 
 ---
