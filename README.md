@@ -88,12 +88,12 @@ Prediction
 
 ## Key Files
 
-`rtl/gemm_accelerator.v` — GEMM accelerator
-`rtl/mac.v` — MAC processing element
-`rtl/sram_<A/B/C>.v` — storage elements
-`tb/tb_gemm_mnist.v` — MNIST inference testbench
-`python_scripts/train_mnist_export_int8.py` — Training and quantization export
-`python_scripts/MNIST_test_wrapper.py` — Accuracy evaluation script
+-`rtl/gemm_accelerator.v` — GEMM accelerator
+-`rtl/mac.v` — MAC processing element
+-`rtl/sram_<A/B/C>.v` — storage elements
+-`tb/tb_gemm_mnist.v` — MNIST inference testbench
+-`python_scripts/train_mnist_export_int8.py` — Training and quantization export
+-`python_scripts/MNIST_test_wrapper.py` — Accuracy evaluation script
 
 ---
 
