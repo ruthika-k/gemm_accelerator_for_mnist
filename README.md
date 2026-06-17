@@ -52,22 +52,8 @@ Per-layer activation, weight, and bias scaling factors are exported during train
 
 ### Inference Flow
 
-INT8 Activations
-        ↓
-GEMM Accelerator
-(A × W Accumulation)
-        ↓
-INT32 Partial Sums
-        ↓
-Bias Addition
-        ↓
-ReLU
-        ↓
-Requantization (Q16.16)
-        ↓
-Next Layer
-        ↓
-Prediction
+<img width="441" height="741" alt="image" src="https://github.com/user-attachments/assets/97b215c8-d7de-459b-b60d-6f43b029d8de" />
+
 
 ---
 
@@ -88,11 +74,16 @@ Prediction
 
 ## Key Files
 
--`rtl/gemm_accelerator.v` — GEMM accelerator
+-`rtl/gemm_accelerator.v` — GEMM accelerator 
+
 -`rtl/mac.v` — MAC processing element
+
 -`rtl/sram_<A/B/C>.v` — storage elements
+
 -`tb/tb_gemm_mnist.v` — MNIST inference testbench
+
 -`python_scripts/train_mnist_export_int8.py` — Training and quantization export
+
 -`python_scripts/MNIST_test_wrapper.py` — Accuracy evaluation script
 
 ---
