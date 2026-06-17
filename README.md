@@ -136,3 +136,9 @@ Run:
 * AXI memory interface
 * FPGA implementation and benchmarking
 * Systolic-array-based architecture exploration
+
+---
+
+## Project Report
+
+You can find the detailed report in the `docs/` folder.
